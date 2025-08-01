@@ -45,7 +45,7 @@ const StoryNarrator = ({ isActive, story, onNarrationEnd }: StoryNarratorProps) 
     // Start gentle melody
     melodyGenerator.startMelody();
 
-    // Start Groot's voice narration with Gen Z slang
+    // Start Groot's voice narration
     voiceNarrator.speak(
       story.narrationText,
       () => console.log('Groot started speaking'),
@@ -194,13 +194,13 @@ const StoryNarrator = ({ isActive, story, onNarrationEnd }: StoryNarratorProps) 
           {/* Story title */}
           <div className="space-y-2">
             <h2 className="font-bangers text-3xl text-comic-title">
-              I am Groot... 💅✨
+              I am Groot...
             </h2>
             <p className="text-secondary font-semibold">
-              The Tea on {story?.heroName} 🐛
+              Story of {story.heroName} 🐛
             </p>
             <p className="text-sm text-muted-foreground">
-              *Groot's deep voice spills the tea through the forest* 🍵
+              *Groot's deep voice echoes through the forest*
             </p>
           </div>
 
@@ -217,7 +217,7 @@ const StoryNarrator = ({ isActive, story, onNarrationEnd }: StoryNarratorProps) 
               {/* Story elements that appear as narration progresses */}
               {currentText.includes('powers') && (
                 <div className="flex justify-center gap-4 mt-4">
-                  {story?.powers.slice(0, 2).map((power, index) => (
+                  {story.powers.slice(0, 2).map((power, index) => (
                     <div key={index} className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm animate-fade-in">
                       {power.split(' ')[0]}
                     </div>
@@ -231,7 +231,7 @@ const StoryNarrator = ({ isActive, story, onNarrationEnd }: StoryNarratorProps) 
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-              <span>Vibes Playing 🎵</span>
+              <span>Gentle Melody Playing</span>
             </div>
           </div>
         </div>

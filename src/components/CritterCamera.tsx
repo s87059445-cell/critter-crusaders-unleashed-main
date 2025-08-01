@@ -22,6 +22,12 @@ const CritterCamera = ({ onCapture, isLoading = false }: CritterCameraProps) => 
         throw new Error('Camera API not supported in this browser');
       }
 
+      // First, set the camera as active to ensure the video element is rendered
+      setIsActive(true);
+
+      // Wait a bit for the video element to be mounted
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { 
           facingMode: 'environment',
@@ -32,43 +38,49 @@ const CritterCamera = ({ onCapture, isLoading = false }: CritterCameraProps) => 
 
       console.log('Camera stream obtained successfully');
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        streamRef.current = stream;
-        
-        // Wait for video to be ready before setting active
-        videoRef.current.onloadedmetadata = () => {
-          console.log('Video metadata loaded');
-          videoRef.current?.play().then(() => {
-            console.log('Video playback started');
-            setIsActive(true);
-            setHasPermission(true);
-          }).catch((error) => {
-            console.error('Video play error:', error);
-            setHasPermission(false);
-          });
-        };
-
-        // Add event listener for when video actually starts playing
-        videoRef.current.onplaying = () => {
-          console.log('Video is now playing');
-        };
-
-        videoRef.current.onwaiting = () => {
-          console.log('Video is waiting for data');
-        };
-
-        videoRef.current.onerror = (error) => {
-          console.error('Video element error:', error);
-          setHasPermission(false);
-        };
-
-        console.log('Video element configured');
-      } else {
-        console.error('Video ref is null');
+      // Check if video ref exists after setting isActive
+      if (!videoRef.current) {
+        console.error('Video ref is still null after setting isActive');
+        setIsActive(false);
+        setHasPermission(false);
+        return;
       }
+
+      videoRef.current.srcObject = stream;
+      streamRef.current = stream;
+      
+      // Wait for video to be ready before confirming active state
+      videoRef.current.onloadedmetadata = () => {
+        console.log('Video metadata loaded');
+        videoRef.current?.play().then(() => {
+          console.log('Video playback started');
+          setHasPermission(true);
+        }).catch((error) => {
+          console.error('Video play error:', error);
+          setIsActive(false);
+          setHasPermission(false);
+        });
+      };
+
+      // Add event listener for when video actually starts playing
+      videoRef.current.onplaying = () => {
+        console.log('Video is now playing');
+      };
+
+      videoRef.current.onwaiting = () => {
+        console.log('Video is waiting for data');
+      };
+
+      videoRef.current.onerror = (error) => {
+        console.error('Video element error:', error);
+        setIsActive(false);
+        setHasPermission(false);
+      };
+
+      console.log('Video element configured');
     } catch (error: any) {
       console.error('Camera access error:', error);
+      setIsActive(false);
       setHasPermission(false);
     }
   }, []);

@@ -79,7 +79,7 @@ export class MelodyGenerator {
       if (this.isPlaying) {
         this.createMelodySequence();
       }
-    }, 16000); // 16 seconds (8 notes * 2 seconds each)
+    }, 24000); // 24 seconds (8 notes * 3 seconds each)
   }
 
   // Stop the melody
