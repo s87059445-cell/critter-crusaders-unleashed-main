@@ -1,5 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Camera, Zap, RotateCcw } from 'lucide-react';
+import InsectDetector from './InsectDetector';
+import HeroTransformation from './HeroTransformation';
 
 interface CritterCameraProps {
   onCapture: (imageData: string) => void;
@@ -10,10 +12,28 @@ const CritterCamera = ({ onCapture, isLoading = false }: CritterCameraProps) => 
   const [isActive, setIsActive] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [detectedInsect, setDetectedInsect] = useState<any>(null);
+  const [showTransformation, setShowTransformation] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  const handleInsectDetected = (insect: any) => {
+    setDetectedInsect(insect);
+    setShowTransformation(true);
+    console.log('Insect detected:', insect);
+  };
+
+  const handleTransformationComplete = () => {
+    setShowTransformation(false);
+    // Optionally trigger image capture after transformation
+    setTimeout(() => {
+      if (videoRef.current && canvasRef.current) {
+        captureImage();
+      }
+    }, 1000);
+  };
 
   const startCamera = useCallback(async () => {
     console.log('Attempting to start camera...');
@@ -171,6 +191,13 @@ const CritterCamera = ({ onCapture, isLoading = false }: CritterCameraProps) => 
                 className="w-full h-full object-cover"
                 style={{ transform: 'scaleX(-1)' }} // Mirror the camera for better UX
               />
+              {/* Insect Detector Overlay */}
+              <div className="absolute inset-0 pointer-events-none">
+                <InsectDetector 
+                  isActive={isActive} 
+                  onInsectDetected={handleInsectDetected}
+                />
+              </div>
               {/* Debug overlay to show camera is active */}
               <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
                 LIVE
@@ -249,6 +276,13 @@ const CritterCamera = ({ onCapture, isLoading = false }: CritterCameraProps) => 
       </div>
 
       <canvas ref={canvasRef} className="hidden" />
+
+      {/* Hero Transformation Sequence */}
+      <HeroTransformation
+        insect={detectedInsect}
+        isVisible={showTransformation}
+        onComplete={handleTransformationComplete}
+      />
     </div>
   );
 };

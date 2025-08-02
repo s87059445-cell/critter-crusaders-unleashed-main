@@ -45,12 +45,12 @@ const StoryNarrator = ({ isActive, story, onNarrationEnd }: StoryNarratorProps) 
     // Start gentle melody
     melodyGenerator.startMelody();
 
-    // Start Groot's voice narration
-    voiceNarrator.speak(
+    // Start enhanced forest-style voice narration
+    voiceNarrator.speakForestStyle(
       story.narrationText,
-      () => console.log('Groot started speaking'),
+      () => console.log('Deep forest voice started speaking'),
       () => {
-        console.log('Groot finished speaking');
+        console.log('Deep forest voice finished speaking');
         setTimeout(() => {
           setIsNarrating(false);
           onNarrationEnd();
