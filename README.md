@@ -57,13 +57,13 @@ npm run build
 
 ### Screenshots
 
-![Camera Interface](screenshots/camera-interface.png)
+![Camera Interface](https://github.com/s87059445-cell/critter-crusaders-unleashed-main/blob/main/home.png?raw=true)
 *The main camera interface with insect detection radar and superhero transformation overlay*
 
-![Story Generation](screenshots/story-generation.png)
+![Story Generation](https://github.com/s87059445-cell/critter-crusaders-unleashed-main/blob/main/home3.png?raw=true)
 *AI-generated superhero story with comic book styling and voice narration controls*
 
-![Groot Narrator](screenshots/groot-narrator.png)
+![Groot Narrator](https://github.com/s87059445-cell/critter-crusaders-unleashed-main/blob/main/home2.png?raw=true)
 *Immersive Groot-style storytelling with animated comic panels and forest ambiance*
 
 
