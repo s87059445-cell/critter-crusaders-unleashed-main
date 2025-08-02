@@ -70,11 +70,11 @@ npm run build
 ## Project Demo
 
 ### Video Demo
-[Add your demo video link here]
+[https://drive.google.com/file/d/1HbiJBGK0kWTpj00jImdCSB-mq5FnwrIr/view?usp=sharing]
 *Demonstrates the complete user journey from insect capture to superhero story generation with voice narration*
 
 ### Live Demo
-[Add live demo link here]
+[https://critter-crusaders-unleashed-main.vercel.app/]
 *Experience the full Critter Crusaders Unleashed application in action*
 
 ## Team Contributions
